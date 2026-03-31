@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClaudeCoworkでできること アイディア100【Webデザイナー編】</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+      background: #f0f0f5;
+      color: #1e1e2e;
+      min-height: 100vh;
+    }
+
+    /* ヘッダー */
+    header {
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      color: white;
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 140%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 40%, rgba(139,92,246,0.2) 0%, transparent 55%),
+                  radial-gradient(ellipse at 70% 60%, rgba(236,72,153,0.15) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      display: inline-block;
+      background: linear-gradient(90deg, #a78bfa, #ec4899);
+      border-radius: 999px;
+      padding: 6px 22px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      position: relative;
+      color: white;
+      box-shadow: 0 0 20px rgba(167,139,250,0.4);
+    }
+    header h1 {
+      font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    header h1 span {
+      background: linear-gradient(90deg, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      font-size: 0.9rem;
+      opacity: 0.65;
+      position: relative;
+      margin-top: 8px;
+    }
+    .header-badges {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 18px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 5px 16px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* コントロール */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(240, 240, 245, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #ddd;
+      padding: 14px 20px;
+    }
+    .search-wrap {
+      max-width: 560px;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 11px 16px 11px 42px;
+      border: 2px solid #d1d1e0;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      background: white;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrap input:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+    }
+    .search-wrap .icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      opacity: 0.4;
+    }
+
+    /* フィルター */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+    .filter-btn {
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1.5px solid #ddd;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: white;
+      color: #555;
+    }
+    .filter-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .filter-btn.active { color: white; border-color: transparent; }
+    .filter-btn[data-cat="all"].active { background: #302b63; }
+    .filter-btn[data-cat="design"].active { background: #8b5cf6; }
+    .filter-btn[data-cat="coding"].active { background: #06b6d4; }
+    .filter-btn[data-cat="client"].active { background: #10b981; }
+    .filter-btn[data-cat="proposal"].active { background: #f59e0b; }
+    .filter-btn[data-cat="research"].active { background: #3b82f6; }
+    .filter-btn[data-cat="content"].active { background: #ec4899; }
+    .filter-btn[data-cat="seo"].active { background: #84cc16; color: #1e1e2e !important; }
+    .filter-btn[data-cat="learning"].active { background: #f97316; }
+    .filter-btn[data-cat="workflow"].active { background: #6366f1; }
+    .filter-btn[data-cat="business"].active { background: #64748b; }
+
+    /* メイン */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 18px 60px;
+    }
+    .result-count {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 18px;
+    }
+    .result-count strong { color: #333; }
+
+    /* グリッド */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1.5px solid #e8e8f0;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-color: transparent;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      border-radius: 4px 0 0 4px;
+    }
+    .card[data-cat="design"]::before   { background: #8b5cf6; }
+    .card[data-cat="coding"]::before   { background: #06b6d4; }
+    .card[data-cat="client"]::before   { background: #10b981; }
+    .card[data-cat="proposal"]::before { background: #f59e0b; }
+    .card[data-cat="research"]::before { background: #3b82f6; }
+    .card[data-cat="content"]::before  { background: #ec4899; }
+    .card[data-cat="seo"]::before      { background: #84cc16; }
+    .card[data-cat="learning"]::before { background: #f97316; }
+    .card[data-cat="workflow"]::before { background: #6366f1; }
+    .card[data-cat="business"]::before { background: #64748b; }
+
+    .card-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #ccc;
+      margin-bottom: 7px;
+      letter-spacing: 0.5px;
+    }
+    .card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e1e2e;
+      margin-bottom: 7px;
+      line-height: 1.45;
+    }
+    .card-desc {
+      font-size: 0.78rem;
+      color: #666;
+      line-height: 1.65;
+    }
+    .card-tag {
+      display: inline-block;
+      margin-top: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: white;
+    }
+    .card[data-cat="design"]   .card-tag { background: #8b5cf6; }
+    .card[data-cat="coding"]   .card-tag { background: #06b6d4; }
+    .card[data-cat="client"]   .card-tag { background: #10b981; }
+    .card[data-cat="proposal"] .card-tag { background: #f59e0b; }
+    .card[data-cat="research"] .card-tag { background: #3b82f6; }
+    .card[data-cat="content"]  .card-tag { background: #ec4899; }
+    .card[data-cat="seo"]      .card-tag { background: #84cc16; color: #1e1e2e; }
+    .card[data-cat="learning"] .card-tag { background: #f97316; }
+    .card[data-cat="workflow"] .card-tag { background: #6366f1; }
+    .card[data-cat="business"] .card-tag { background: #64748b; }
+
+    .card.hidden { display: none; }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      display: none;
+    }
+    .empty.visible { display: block; }
+    .empty-icon { font-size: 3rem; margin-bottom: 14px; }
+
+    footer {
+      text-align: center;
+      padding: 22px;
+      font-size: 0.78rem;
+      color: #aaa;
+      border-top: 1px solid #e0e0ec;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">ウェブデザイナー編</div>
+  <h1>ClaudeCoworkで<span>できること</span></h1>
+  <h1>アイディア<span>100</span></h1>
+  <p>Webデザイナーの仕事をもっとスマートに・もっとクリエイティブに</p>
+  <div class="header-badges">
+    <span class="badge">✨ 全100アイディア</span>
+    <span class="badge">🎨 10カテゴリ</span>
+    <span class="badge">🖥️ Webデザイナー専用</span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="キーワードで検索（例：LP、コード、クライアント）">
+  </div>
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-cat="all">すべて</button>
+    <button class="filter-btn" data-cat="design">🎨 デザイン制作</button>
+    <button class="filter-btn" data-cat="coding">💻 コーディング</button>
+    <button class="filter-btn" data-cat="client">👥 クライアント対応</button>
+    <button class="filter-btn" data-cat="proposal">📋 提案・見積もり</button>
+    <button class="filter-btn" data-cat="research">🔎 リサーチ</button>
+    <button class="filter-btn" data-cat="content">✍️ コンテンツ</button>
+    <button class="filter-btn" data-cat="seo">📈 SEO・分析</button>
+    <button class="filter-btn" data-cat="learning">📚 学習・スキルアップ</button>
+    <button class="filter-btn" data-cat="workflow">⚡ 業務効率化</button>
+    <button class="filter-btn" data-cat="business">💼 ビジネス運営</button>
+  </div>
+</div>
+
+<main>
+  <div class="result-count" id="resultCount">全 <strong>100</strong> 件表示中</div>
+  <div class="grid" id="cardGrid"></div>
+  <div class="empty" id="emptyState">
+    <div class="empty-icon">🎨</div>
+    <p>一致するアイディアが見つかりませんでした</p>
+  </div>
+</main>
+
+<footer>
+  ClaudeCowork アイディア集【Webデザイナー編】— Powered by Claude
+</footer>
+
+<script>
+const CATEGORY_LABELS = {
+  design:   "🎨 デザイン制作",
+  coding:   "💻 コーディング",
+  client:   "👥 クライアント対応",
+  proposal: "📋 提案・見積もり",
+  research: "🔎 リサーチ",
+  content:  "✍️ コンテンツ",
+  seo:      "📈 SEO・分析",
+  learning: "📚 学習・スキルアップ",
+  workflow: "⚡ 業務効率化",
+  business: "💼 ビジネス運営",
+};
+
+const IDEAS = [
+  // ── デザイン制作 (10) ──
+  { id:1,  cat:"design", title:"LPのセクション構成を一緒に考える", desc:"商品・ターゲット・目的を伝えると、CVRが上がるランディングページのセクション順と内容を提案してくれます。" },
+  { id:2,  cat:"design", title:"ワイヤーフレームのテキスト原稿を作る", desc:"デザインカンプに入れるダミーテキストを、実際のサービスに合わせたリアルな文章で用意してくれます。" },
+  { id:3,  cat:"design", title:"カラーパレットのコンセプトを言語化する", desc:"選んだカラーコードを伝えると、そのパレットが持つ印象・世界観をクライアントに説明できる言葉で表現します。" },
+  { id:4,  cat:"design", title:"デザインシステムのルールドキュメントを書く", desc:"フォント・カラー・余白のルールを渡すと、開発チームやクライアントと共有できるドキュメントに仕上げます。" },
+  { id:5,  cat:"design", title:"競合サイトのデザイントレンドを分析する", desc:"競合URLや業界名を伝えると、最新のデザイントレンドと取り入れるべきポイントを整理してくれます。" },
+  { id:6,  cat:"design", title:"アイコンの意味・使い方ガイドラインを作る", desc:"使用するアイコンセットのルールを整理して、デザイン一貫性を保つためのガイドラインを作成します。" },
+  { id:7,  cat:"design", title:"ブランドガイドラインの文章パートを書く", desc:"ブランドのビジョン・トーン・世界観を整理して、ガイドラインに使える本文テキストを作成します。" },
+  { id:8,  cat:"design", title:"Figmaコンポーネントの命名規則を考える", desc:"プロジェクトの規模や構成を伝えると、チームで統一できるFigmaコンポーネントの命名ルールを提案します。" },
+  { id:9,  cat:"design", title:"モバイルファーストのUIパターンを提案する", desc:"作りたい機能や画面の概要を伝えると、スマホ向けに最適化されたUIパターンのアイデアを出してくれます。" },
+  { id:10, cat:"design", title:"フォントの組み合わせとその理由を提案する", desc:"サイトのジャンルやターゲットを話すと、効果的なフォントペアとその選定理由を説明してくれます。" },
+
+  // ── コーディング (10) ──
+  { id:11, cat:"coding", title:"HTMLの構造レビューをしてもらう", desc:"書いたHTMLを貼り付けると、セマンティクス・アクセシビリティ・SEOの観点で改善点を指摘してくれます。" },
+  { id:12, cat:"coding", title:"CSSアニメーションのコードを書いてもらう", desc:"「フェードイン」「スライドイン」など動きのイメージを伝えると、そのままコピペできるCSSを生成します。" },
+  { id:13, cat:"coding", title:"レスポンシブ対応のCSSを自動生成する", desc:"デザインの崩れやすいポイントを説明すると、ブレークポイント付きのメディアクエリを書いてくれます。" },
+  { id:14, cat:"coding", title:"JavaScriptのスニペットを説明付きで生成する", desc:"「スクロールしたらナビを固定」など動きを日本語で説明すると、JSコードとその解説をセットで提供します。" },
+  { id:15, cat:"coding", title:"既存のCSSを整理・リファクタリングする", desc:"散らかったCSSを貼ると、重複削除・変数化・クラス整理などをして読みやすく書き直してくれます。" },
+  { id:16, cat:"coding", title:"WordPressテーマのPHPコードを説明する", desc:"理解できないPHPスニペットを貼り付けると、何をしているコードかを日本語でわかりやすく解説します。" },
+  { id:17, cat:"coding", title:"OGP・metaタグを一括生成する", desc:"ページタイトル・説明文・URLなどを渡すと、SNSシェア用のOGPタグを完全な形で生成してくれます。" },
+  { id:18, cat:"coding", title:"Tailwind CSSのクラス名を提案する", desc:"実現したいデザインやスタイルを説明すると、対応するTailwindのクラスの組み合わせを提案します。" },
+  { id:19, cat:"coding", title:"アクセシビリティ対応（WCAG準拠）を確認する", desc:"コードを渡すとWCAGガイドライン観点でのチェックと、対応方法をわかりやすく教えてくれます。" },
+  { id:20, cat:"coding", title:"コードのバグ原因を特定して修正案を出す", desc:"動かないコードをペーストすると、原因を特定して修正済みのコードを提示してくれます。" },
+
+  // ── クライアント対応 (10) ──
+  { id:21, cat:"client", title:"修正依頼に対するわかりやすい返答を作る", desc:"クライアントの修正メッセージを共有すると、技術的な制約も含めた丁寧な返答文を作成してくれます。" },
+  { id:22, cat:"client", title:"デザインの意図をわかりやすく説明する文章を書く", desc:"自分が作ったデザインの根拠（なぜこの色・レイアウトか）を、クライアントに納得してもらえる言葉で説明します。" },
+  { id:23, cat:"client", title:"納期遅延の連絡メールを丁寧に書く", desc:"遅延の理由と新しいスケジュールを伝えると、関係を損なわない誠実な連絡メールを作成します。" },
+  { id:24, cat:"client", title:"クライアントのフィードバックを整理・分析する", desc:"散らかったフィードバックをまとめて渡すと、対応必須・要確認・対応不要に分類して整理してくれます。" },
+  { id:25, cat:"client", title:"デザインレビュー用の議事録テンプレートを作る", desc:"オンライン・対面どちらにも使えるデザインレビュー会議の議事録フォーマットを作成します。" },
+  { id:26, cat:"client", title:"範囲外の追加依頼を断るメールを書く", desc:"契約スコープ外の作業依頼に対して、追加費用の必要性を穏やかかつ明確に伝えるメール文を作成します。" },
+  { id:27, cat:"client", title:"初回打ち合わせのヒアリングシートを作る", desc:"業種や案件規模を伝えると、クライアントから必要な情報を漏れなく引き出すヒアリングシートを作成します。" },
+  { id:28, cat:"client", title:"デザイン承認フローの説明文を書く", desc:"制作プロセスや確認フローをクライアントに伝えるためのわかりやすい説明文書を作成します。" },
+  { id:29, cat:"client", title:"クレームへの対応文を落ち着いて書く", desc:"厳しい指摘や不満のメッセージを共有すると、感情的にならず誠実に対処する返答文を提案してくれます。" },
+  { id:30, cat:"client", title:"プロジェクト完了後のお礼・次回提案メールを書く", desc:"案件終了のお礼と、次の展開へつながる自然な継続提案を含むメール文を作成してくれます。" },
+
+  // ── 提案・見積もり (10) ──
+  { id:31, cat:"proposal", title:"ホームページ制作の提案書を作る", desc:"クライアントの業種・課題・予算を伝えると、刺さる提案書の構成と文章を作成してくれます。" },
+  { id:32, cat:"proposal", title:"見積書の各項目の説明文を書く", desc:"工数・単価の根拠をわかりやすく説明する一言コメントを、見積書の各行に添えてくれます。" },
+  { id:33, cat:"proposal", title:"リニューアル提案のビフォーアフター資料を作る", desc:"現状サイトの問題点と改善後のイメージを整理して、説得力のある比較資料の文章を作成します。" },
+  { id:34, cat:"proposal", title:"追加オプションのアップセル文章を書く", desc:"SEO対応・アニメーション追加など、追加提案をクライアントが欲しくなる言葉で説明する文章を作ります。" },
+  { id:35, cat:"proposal", title:"競合との差別化ポイントをまとめる", desc:"自分の強みと競合の特徴を話すと、クライアントに伝えるべき差別化ポイントを整理してくれます。" },
+  { id:36, cat:"proposal", title:"制作スケジュール表を自動作成する", desc:"案件の規模と期限を伝えると、各フェーズの期間とマイルストーン付きのスケジュール表を作成します。" },
+  { id:37, cat:"proposal", title:"価格交渉への対応スクリプトを考える", desc:"「もう少し安くならない?」という値下げ交渉に対して、価値を下げずに対処する返答パターンを提案します。" },
+  { id:38, cat:"proposal", title:"RFP（提案依頼書）の要件を整理する", desc:"クライアントから届いたRFPの要件を読み解いて、提案に必要な論点と回答方針を整理してくれます。" },
+  { id:39, cat:"proposal", title:"保守・運用プランの提案文を書く", desc:"サイト公開後の継続サポートプランを、クライアントが契約したくなるような魅力的な文章で提案します。" },
+  { id:40, cat:"proposal", title:"ポートフォリオ掲載用の案件紹介文を書く", desc:"手がけた案件の概要・課題・解決策を伝えると、ポートフォリオに使えるプロフェッショナルな紹介文を作成します。" },
+
+  // ── リサーチ (10) ──
+  { id:41, cat:"research", title:"業界別のWebデザイントレンドを調べる", desc:"飲食・医療・不動産など、業界ごとの最新Webデザインのトレンドと参考にすべきポイントをまとめてくれます。" },
+  { id:42, cat:"research", title:"競合サイトのUI/UX分析レポートを作る", desc:"競合のURLを共有すると、ナビ・CTA・情報設計の観点から分析してレポートにまとめてくれます。" },
+  { id:43, cat:"research", title:"ターゲットユーザーのペルソナを作成する", desc:"商品・サービスの概要を伝えると、年齢・職業・悩み・行動パターンが詳細なペルソナを作成します。" },
+  { id:44, cat:"research", title:"カラーが与える心理的印象を調べる", desc:"使いたい色や業界を伝えると、その色が与える心理的効果とWebサイトでの使用事例を教えてくれます。" },
+  { id:45, cat:"research", title:"海外の優れたデザイン事例を収集・整理する", desc:"テーマや業界を指定すると、海外の参考になるデザイン事例と学べるポイントを整理してくれます。" },
+  { id:46, cat:"research", title:"UXリサーチ手法を選んでもらう", desc:"プロジェクトの目標・フェーズ・予算を伝えると、最適なUXリサーチ手法と実施方法を提案してくれます。" },
+  { id:47, cat:"research", title:"フォントの使用許可・ライセンスを確認する", desc:"使いたいフォント名を伝えると、商用利用・Webフォント可否・ライセンス条件をまとめて教えてくれます。" },
+  { id:48, cat:"research", title:"Webパフォーマンス改善の施策を調べる", desc:"サイトの現状（表示速度・Lighthouse点数など）を伝えると、効果的な改善施策をリストアップします。" },
+  { id:49, cat:"research", title:"デザインのアクセシビリティ基準を確認する", desc:"制作物の概要を伝えると、適用すべきアクセシビリティ基準とチェックリストを作成してくれます。" },
+  { id:50, cat:"research", title:"クライアント業界のユーザー行動特性を調べる", desc:"業種を伝えると、ターゲット層がWebサイトで取りやすい行動パターンと最適なUXアプローチを教えます。" },
+
+  // ── コンテンツ (10) ──
+  { id:51, cat:"content", title:"ページのキャッチコピーを複数案出してもらう", desc:"商品・サービスと伝えたいことを話すと、ヒーローセクションに使えるキャッチコピー案を10個以上出してくれます。" },
+  { id:52, cat:"content", title:"About/会社概要ページの文章を書く", desc:"企業の概要・強み・歴史を伝えると、信頼感が伝わる会社概要ページのテキストを作成してくれます。" },
+  { id:53, cat:"content", title:"サービス説明のボディコピーを書く", desc:"機能・価格・ターゲットを共有すると、読者が「欲しい！」と思うサービス紹介文を作成します。" },
+  { id:54, cat:"content", title:"CTAボタンの文言を最適化する", desc:"現在のCTAと改善したいページの目的を伝えると、クリック率が上がるCTAの文言を複数提案してくれます。" },
+  { id:55, cat:"content", title:"FAQのQ&Aを自動作成する", desc:"サービス内容を伝えると、ユーザーが疑問に思いやすい質問と、明確な回答のセットを作成します。" },
+  { id:56, cat:"content", title:"事例紹介（Case Study）ページの構成と文章を作る", desc:"案件の概要と成果を話すと、説得力のある事例紹介ページの構成と本文テキストを作成します。" },
+  { id:57, cat:"content", title:"エラーページ（404など）のユニークなコピーを書く", desc:"ブランドの雰囲気を伝えると、思わずクスっとするオリジナルのエラーページテキストを作成します。" },
+  { id:58, cat:"content", title:"プライバシーポリシー・利用規約の草案を作る", desc:"サービスの概要を伝えると、一般的なプライバシーポリシー・利用規約の草案を作成してくれます（要法務確認）。" },
+  { id:59, cat:"content", title:"ポップアップ・モーダルの文言を最適化する", desc:"どんなアクションを促したいかを伝えると、UXを損なわない自然なポップアップの文言を提案します。" },
+  { id:60, cat:"content", title:"SNSのポートフォリオ投稿文を書く", desc:"作った制作物の概要を伝えると、Instagram・X・LinkedInそれぞれに最適な投稿文を作成してくれます。" },
+
+  // ── SEO・分析 (10) ──
+  { id:61, cat:"seo", title:"ページタイトル・メタディスクリプションを最適化する", desc:"ページの内容とターゲットキーワードを伝えると、CTRが上がるtitle・descriptionの案を複数提案します。" },
+  { id:62, cat:"seo", title:"見出し（H1〜H3）のSEO構造を設計する", desc:"記事・ページのテーマを共有すると、検索エンジンにも読者にも伝わる見出し階層の設計を提案します。" },
+  { id:63, cat:"seo", title:"構造化データ（JSON-LD）のコードを生成する", desc:"ページの種類（商品・記事・FAQなど）を伝えると、そのままコピペできるJSON-LDコードを生成します。" },
+  { id:64, cat:"seo", title:"コアウェブバイタル改善の施策を提案する", desc:"LCP・CLS・INPの現在のスコアを共有すると、改善するための具体的なHTML/CSS/JS施策を提案します。" },
+  { id:65, cat:"seo", title:"内部リンク設計の戦略を考える", desc:"サイト構造と主要ページを伝えると、SEO効果を高める内部リンクの設計と優先度を提案してくれます。" },
+  { id:66, cat:"seo", title:"Google Analyticsのデータを解釈してもらう", desc:"GA4の数値やレポートをテキストで共有すると、「何が起きているか・何をすべきか」を解説してくれます。" },
+  { id:67, cat:"seo", title:"alt属性・画像SEOのルールを整理する", desc:"サイトの概要を伝えると、画像のalt属性の書き方ルールと、SEOに効果的な命名規則を提案します。" },
+  { id:68, cat:"seo", title:"ページ速度改善レポートを読み解いてもらう", desc:"PageSpeed InsightsやLighthouseの結果を共有すると、優先度の高い改善項目と具体策を解説してくれます。" },
+  { id:69, cat:"seo", title:"コンテンツSEO戦略のロードマップを作る", desc:"サイトのジャンルと現状を伝えると、3〜6ヶ月のコンテンツSEO計画と記事テーマ案を作成します。" },
+  { id:70, cat:"seo", title:"ABテストの仮説と設計を考える", desc:"改善したいページとKPIを伝えると、効果的なABテストの仮説・変数・計測方法を設計してくれます。" },
+
+  // ── 学習・スキルアップ (10) ──
+  { id:71, cat:"learning", title:"知らないCSSプロパティをすぐ調べて使い方を教わる", desc:"「container queryって何?」など疑問に思ったCSSをその場で解説・使用例つきで教えてくれます。" },
+  { id:72, cat:"learning", title:"デザインツールの新機能を説明してもらう", desc:"Figmaなどの新機能を自分のワークフローに活かす方法を、具体的なユースケースで説明してくれます。" },
+  { id:73, cat:"learning", title:"UXデザインの原則を実例で学ぶ", desc:"ヤコブの法則・ヒックの法則など、UX原則を自分のプロジェクトに当てはめた例で解説してくれます。" },
+  { id:74, cat:"learning", title:"海外のデザイン記事・ドキュメントを翻訳・要約する", desc:"英語のMDN・Design Systems記事などを日本語で要約・解説してくれます。" },
+  { id:75, cat:"learning", title:"デザインポートフォリオのフィードバックをもらう", desc:"自分のポートフォリオの説明や構成を共有すると、採用担当者目線での改善提案をしてくれます。" },
+  { id:76, cat:"learning", title:"デザイン批評（クリティーク）の練習相手になってもらう", desc:"デザインの意図を説明すると、建設的かつ厳しいデザインクリティークを行ってくれます。" },
+  { id:77, cat:"learning", title:"プログラミング初歩をデザイナー向けに教えてもらう", desc:"「Gitって何?」「APIって?」など技術概念をデザイナーが理解しやすい言葉で丁寧に解説してくれます。" },
+  { id:78, cat:"learning", title:"タイポグラフィの基礎知識を学ぶ", desc:"フォントサイズ・行間・字間・カーニングのルールと、美しい組版を作るためのガイドを教えてくれます。" },
+  { id:79, cat:"learning", title:"色彩理論を実際のUIデザインに応用する方法を学ぶ", desc:"色のトライアド・補色など理論を、実際のUIカラー設計にどう使うかを具体例で教えてくれます。" },
+  { id:80, cat:"learning", title:"インタラクションデザインのパターンを学ぶ", desc:"マイクロインタラクション・トランジションなどの設計パターンと効果的な実装方法を解説してくれます。" },
+
+  // ── 業務効率化 (10) ──
+  { id:81, cat:"workflow", title:"案件管理スプレッドシートのテンプレートを作る", desc:"複数案件の進捗・締め切り・稼働時間を一元管理できるExcelテンプレートを作成してくれます。" },
+  { id:82, cat:"workflow", title:"デザインの作業工数を見積もりやすく分解する", desc:"プロジェクトの概要を伝えると、タスクレベルで分解した工数見積もり一覧を作成してくれます。" },
+  { id:83, cat:"workflow", title:"制作物の納品チェックリストを作る", desc:"案件の種類を伝えると、納品前に確認すべき全項目を網羅したチェックリストを作成します。" },
+  { id:84, cat:"workflow", title:"デザインの品質チェックリストを作る", desc:"フォント・カラー・余白・レスポンシブなど、デザインQAのための一覧チェックシートを作成します。" },
+  { id:85, cat:"workflow", title:"定型メールの返信テンプレートを作り置きする", desc:"お礼・見積もり送付・修正完了など、よく使うメールのテンプレートを一括で作成してくれます。" },
+  { id:86, cat:"workflow", title:"月次の稼働レポートを自動作成する", desc:"案件名・時間・売上を渡すと、月の振り返りに使えるサマリーレポートを作成してくれます。" },
+  { id:87, cat:"workflow", title:"制作プロセスをSOP（標準作業手順書）にまとめる", desc:"普段の制作フローを説明すると、外注・サポートスタッフに渡せる手順書に整理してくれます。" },
+  { id:88, cat:"workflow", title:"プロジェクトのリスクと対処法を事前に洗い出す", desc:"プロジェクトの概要を伝えると、起こりえるリスクと事前の対処策を一覧化してくれます。" },
+  { id:89, cat:"workflow", title:"Figmaのショートカット・効率化TIPSをまとめる", desc:"現在の作業フローを説明すると、それに合わせたFigmaの効率化テクニックとショートカットを提案します。" },
+  { id:90, cat:"workflow", title:"週次タスクの振り返り・次週計画フォーマットを作る", desc:"毎週の振り返りと計画立てに使えるフォーマットと問いのリストを作成してくれます。" },
+
+  // ── ビジネス運営 (10) ──
+  { id:91, cat:"business", title:"フリーランス契約書のひな型を作る", desc:"制作の種類や取引形態を伝えると、フリーランス向けの基本契約書・業務委託契約書の草案を作成します（要法務確認）。" },
+  { id:92, cat:"business", title:"単価を上げるためのメッセージを考える", desc:"現在の状況とターゲットクライアントを伝えると、値上げを自然に伝える方法とメッセージを提案します。" },
+  { id:93, cat:"business", title:"ポートフォリオサイトの自己紹介文を書く", desc:"スキル・経歴・強みを伝えると、仕事依頼につながるプロフィール文を作成してくれます。" },
+  { id:94, cat:"business", title:"SNSでの発信テーマ・コンテンツカレンダーを作る", desc:"得意分野とターゲット読者を伝えると、1ヶ月分のXやInstagram投稿テーマカレンダーを作成します。" },
+  { id:95, cat:"business", title:"確定申告に備えて経費の整理方法を相談する", desc:"フリーランスとして計上できる経費の種類と、整理しておくべき書類・記録を教えてくれます（要税務確認）。" },
+  { id:96, cat:"business", title:"制作会社・エージェントへの営業メールを書く", desc:"自己紹介・スキル・実績を渡すと、仕事の依頼につながる営業メールのテキストを作成します。" },
+  { id:97, cat:"business", title:"クライアント向けサービス案内資料を作る", desc:"提供サービスの概要を伝えると、初めてのクライアントに渡せるサービス紹介スライドの文章を作成します。" },
+  { id:98, cat:"business", title:"外注・パートナーへの依頼文を書く", desc:"外注したい作業と条件を伝えると、明確で誤解のない依頼文書を作成してくれます。" },
+  { id:99, cat:"business", title:"収入・案件のシミュレーションを計算する", desc:"目標収入や単価・稼働日数を伝えると、月・年の見込み収入と必要な案件数を試算してくれます。" },
+  { id:100, cat:"business", title:"デザイナーとしてのブランドストーリーを作る", desc:"経歴・価値観・得意なことを話すと、他のデザイナーと差別化できる自分だけのストーリーを言語化してくれます。" },
+];
+
+// カードを生成
+const grid = document.getElementById('cardGrid');
+IDEAS.forEach(idea => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.cat = idea.cat;
+  card.dataset.text = (idea.title + ' ' + idea.desc).toLowerCase();
+  card.innerHTML = `
+    <div class="card-num">No. ${String(idea.id).padStart(3,'0')}</div>
+    <div class="card-title">${idea.title}</div>
+    <div class="card-desc">${idea.desc}</div>
+    <span class="card-tag">${CATEGORY_LABELS[idea.cat]}</span>
+  `;
+  grid.appendChild(card);
+});
+
+// フィルター・検索
+let currentCat = 'all';
+let currentSearch = '';
+
+function updateView() {
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const catMatch = currentCat === 'all' || card.dataset.cat === currentCat;
+    const searchMatch = !currentSearch || card.dataset.text.includes(currentSearch);
+    if (catMatch && searchMatch) {
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  document.getElementById('resultCount').innerHTML = `<strong>${visible}</strong> 件表示中（全100件）`;
+  document.getElementById('emptyState').classList.toggle('visible', visible === 0);
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCat = btn.dataset.cat;
+  updateView();
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  currentSearch = e.target.value.trim().toLowerCase();
+  updateView();
+});
+</script>
+</body>
+</html>
